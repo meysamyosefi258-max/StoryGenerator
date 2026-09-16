@@ -1,0 +1,11 @@
+<resources>
+    <color name="bg">#0B0B0F</color>
+    <color name="panel">#16161C</color>
+    <color name="panel_border">#26262F</color>
+    <color name="text_main">#E9E9EF</color>
+    <color name="text_muted">#8A8A95</color>
+    <color name="orange">#FF8A4C</color>
+    <color name="blue">#5B7CFA</color>
+    <color name="red">#7A2020</color>
+    <color name="field_bg">#0F0F14</color>
+</resources>

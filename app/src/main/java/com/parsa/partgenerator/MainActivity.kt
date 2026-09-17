@@ -104,35 +104,44 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun generatePartText(words: List<String>, passes: Int = 20): String {
-            val counts = HashMap<String, Int>()
-            for (w in words) counts[w] = (counts[w] ?: 0) + passes
+            val total = minOf(words.size * passes, 6000)
 
-            val total = words.size * passes
-            val output = mutableListOf<String>()
-            var lastWord: String? = null
+            val pool = ArrayList<String>(total)
+            while (pool.size < total) {
+                pool.addAll(words)
+            }
+            while (pool.size > total) {
+                pool.removeAt(pool.size - 1)
+            }
+            pool.shuffle()
+
+            for (i in 1 until pool.size) {
+                if (pool[i] == pool[i - 1]) {
+                    for (j in i + 1 until pool.size) {
+                        if (pool[j] != pool[i] && pool[j] != pool[i - 1]) {
+                            val tmp = pool[i]
+                            pool[i] = pool[j]
+                            pool[j] = tmp
+                            break
+                        }
+                    }
+                }
+            }
+
+            val output = ArrayList<String>(pool.size * 2)
             var lastWasTypo = false
-            var placed = 0
-
-            while (placed < total) {
-                var candidates = words.filter { (counts[it] ?: 0) > 0 && it != lastWord }
-                if (candidates.isEmpty()) candidates = words.filter { (counts[it] ?: 0) > 0 }
-                if (candidates.isEmpty()) break
-
-                val pick = candidates[Random.nextInt(candidates.size)]
-                counts[pick] = (counts[pick] ?: 0) - 1
-                lastWord = pick
-                placed++
-
+            for (idx in pool.indices) {
+                val word = pool[idx]
                 val outWord = if (!lastWasTypo && Random.nextInt(100) < 35) {
                     lastWasTypo = true
-                    applyTypo(pick)
+                    applyTypo(word)
                 } else {
                     lastWasTypo = false
-                    pick
+                    word
                 }
                 output.add(outWord)
 
-                if (placed < total && Random.nextInt(100) < 25) {
+                if (idx < pool.size - 1 && Random.nextInt(100) < 25) {
                     output.add(connectorWords[Random.nextInt(connectorWords.size)])
                 }
             }
@@ -147,13 +156,19 @@ class MainActivity : AppCompatActivity() {
                 return
             }
 
-            val partText = generatePartText(words, 20)
-            currentPartText = partText
-            tvCurrentPart.text = partText
-            tvCurrentPart.setTextColor(resources.getColor(R.color.text_main, theme))
+            btnNew.isEnabled = false
+            Thread {
+                val partText = generatePartText(words, 20)
+                runOnUiThread {
+                    currentPartText = partText
+                    tvCurrentPart.text = partText
+                    tvCurrentPart.setTextColor(resources.getColor(R.color.text_main, theme))
 
-            history.add(0, partText)
-            renderHistory()
+                    history.add(0, partText)
+                    renderHistory()
+                    btnNew.isEnabled = true
+                }
+            }.start()
         }
 
         btnNew.setOnClickListener { generatePart() }

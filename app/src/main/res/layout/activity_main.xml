@@ -61,7 +61,7 @@
                 android:layout_marginTop="8dp" />
         </LinearLayout>
 
-        <!-- current part card -->
+        <!-- history card (moved up, single-line items, tap to copy) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,6 +69,61 @@
             android:background="@drawable/bg_card"
             android:padding="16dp"
             android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/btnClearHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_red"
+                    android:text="پاک کردن تاریخچه"
+                    android:textColor="#FFD7D7"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp" />
+
+                <TextView
+                    android:id="@+id/tvHistoryTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="تاریخچه (۰)"
+                    android:textColor="@color/text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="با لمس هر پارت از تاریخچه، همون کپی می‌شه."
+                android:textColor="@color/text_muted"
+                android:textSize="11sp"
+                android:layout_marginTop="4dp" />
+
+            <LinearLayout
+                android:id="@+id/historyContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp" />
+
+        </LinearLayout>
+
+        <!-- current part card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,53 +174,6 @@
                 android:textColor="@color/text_muted"
                 android:textSize="15sp"
                 android:lineSpacingMultiplier="1.4" />
-        </LinearLayout>
-
-        <!-- history card -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/bg_card"
-            android:padding="16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <Button
-                    android:id="@+id/btnClearHistory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_btn_red"
-                    android:text="پاک کردن تاریخچه"
-                    android:textColor="#FFD7D7"
-                    android:textSize="13sp"
-                    android:textAllCaps="false"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp" />
-
-                <TextView
-                    android:id="@+id/tvHistoryTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="تاریخچه (۰)"
-                    android:textColor="@color/text_main"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/historyContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="12dp" />
-
         </LinearLayout>
 
     </LinearLayout>

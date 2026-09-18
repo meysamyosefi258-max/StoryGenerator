@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.Gravity
 import android.widget.Button
@@ -89,9 +90,15 @@ class MainActivity : AppCompatActivity() {
                     text = "${toPersianDigits(history.size - i)}. $item"
                     setTextColor(resources.getColor(R.color.text_muted, theme))
                     textSize = 13f
-                    setLineSpacing(0f, 1.4f)
+                    maxLines = 1
+                    ellipsize = TextUtils.TruncateAt.END
                     setBackgroundResource(R.drawable.bg_field)
                     setPadding(24, 20, 24, 20)
+                    setOnClickListener {
+                        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        clipboard.setPrimaryClip(ClipData.newPlainText("part", item))
+                        Toast.makeText(this@MainActivity, "کپی شد", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 val lp = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
